@@ -27,6 +27,7 @@
 # define MOVE_SPEED 0.1
 # define ROTATE_SPEED 0.1
 
+//image struct
 typedef struct s_img
 {
     void    *img;
@@ -36,6 +37,7 @@ typedef struct s_img
     int     endian;
 } t_img;
 
+//mlx struct
 typedef struct s_mlx
 {
     void    *mlx;
@@ -43,6 +45,7 @@ typedef struct s_mlx
     t_img   img;
 } t_mlx;
 
+//player struct -> coord
 typedef struct s_player
 {
     double  x;
@@ -53,6 +56,7 @@ typedef struct s_player
     double  plane_y;
 } t_player;
 
+//keys + events struct
 typedef struct s_data
 {
     t_mlx       mlx;
@@ -66,6 +70,7 @@ typedef struct s_data
     int         key_right;
 } t_data;
 
+//texture struct
 typedef struct s_texture
 {
     char    *path;
@@ -74,6 +79,7 @@ typedef struct s_texture
     int     height;
 } t_texture;
 
+//colour struct
 typedef struct s_color
 {
     int r;
@@ -81,6 +87,7 @@ typedef struct s_color
     int b;
 } t_color;
 
+//map struct
 typedef struct s_map
 {
     char    **grid;
@@ -91,6 +98,7 @@ typedef struct s_map
     int     player_y;
 } t_map;
 
+//game struct
 typedef struct s_game
 {
     t_texture   north;
