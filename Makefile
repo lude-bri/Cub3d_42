@@ -42,7 +42,9 @@ LIBFT_PATH		= $(LIBS_PATH)/libft
 MLX_PATH		= $(LIBS_PATH)/mlx
 
 ### Files Source
-FILES = main.c
+FILES = 100_main.c
+FILES += 200_parser.c
+FILES += 900_error.c
 
 ### Paths
 SRC		= $(addprefix $(SRC_PATH)/, $(FILES))

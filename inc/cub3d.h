@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube3d.h                                           :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 14:44:23 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/01/15 14:47:00 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:18:54 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ typedef enum e_status
 typedef enum e_error
 {
 	PARSE,
+	ARG,
 	INIT_GAME,
-	INIT_WINDOW
+	INIT_WINDOW,
 }	t_error;
 
 /* ************************************************************************** */
@@ -148,6 +149,8 @@ typedef struct s_game
 /* ************************************************************************** */
 
 // Function prototypes
+
+//200 - PARSE
 int     init_game(t_data *data, char *map_path);
 int     init_mlx(t_data *data);
 int     parse_file(char *filename, t_game *game);
@@ -155,5 +158,9 @@ int     handle_keypress(int keycode, t_data *data);
 int     handle_keyrelease(int keycode, t_data *data);
 int     handle_exit(t_data *data);
 void    raycasting(t_data *data);
+int		_parser(char *file, t_game *game);
+
+//900 - ERROR HANDLERS
+void	error(int	no);
 
 #endif
