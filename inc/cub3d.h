@@ -25,20 +25,40 @@
 # include <unistd.h>
 # include "../lib/libft/libft_42/libft.h"
 
+/* ************************************************************************** */
+/*                                  DEFINES                                   */
+/* ************************************************************************** */
+
 # define WINDOW_WIDTH 1280
 # define WINDOW_HEIGHT 720
 # define FOV 60
 # define MOVE_SPEED 0.1
 # define ROTATE_SPEED 0.1
 
-typedef struct s_game		t_game;
+/* ************************************************************************** */
+/*                                  ENUMS								  	  */
+/* ************************************************************************** */
 
+//Cub3D Status
+typedef enum e_status
+{
+	FAILURE,
+	SUCCESS
+}	t_status;
+
+//Error Handlers
 typedef enum e_error
 {
 	PARSE,
 	INIT_GAME,
-	INIT_WINDOW,
-};
+	INIT_WINDOW
+}	t_error;
+
+/* ************************************************************************** */
+/*                                  STRUCTS                                   */
+/* ************************************************************************** */
+
+typedef struct s_game		t_game;
 
 //image struct
 typedef struct s_img
@@ -122,6 +142,10 @@ typedef struct s_game
     t_color     ceiling;
     t_map       map;
 } t_game;
+
+/* ************************************************************************** */
+/*                                 FUNCTIONS                                  */
+/* ************************************************************************** */
 
 // Function prototypes
 int     init_game(t_data *data, char *map_path);
