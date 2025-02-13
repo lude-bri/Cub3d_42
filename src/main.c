@@ -20,7 +20,7 @@ int	main(int ac, char **av)
 	if (ac == 2)
 	{
 		//parse everything
-		parser(av[1]);
+		//parser(av[1]);
 		//send the parsed map to mlx loop
 		//wait till end and close/free
 	}
