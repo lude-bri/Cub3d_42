@@ -68,7 +68,7 @@ typedef struct s_img
     int     bits_per_pixel;
     int     line_length;
     int     endian;
-} t_img;
+}			t_img;
 
 //mlx struct
 typedef struct s_mlx
@@ -76,7 +76,7 @@ typedef struct s_mlx
     void    *mlx;
     void    *win;
     t_img   img;
-} t_mlx;
+}			t_mlx;
 
 //player struct -> coord
 typedef struct s_player
@@ -87,7 +87,7 @@ typedef struct s_player
     double  dir_y;
     double  plane_x;
     double  plane_y;
-} t_player;
+}			t_player;
 
 //keys + events struct
 typedef struct s_data
@@ -101,7 +101,7 @@ typedef struct s_data
     int         key_d;
     int         key_left;
     int         key_right;
-} t_data;
+}				t_data;
 
 //texture struct
 typedef struct s_texture
@@ -110,7 +110,7 @@ typedef struct s_texture
     void    *img;
     int     width;
     int     height;
-} t_texture;
+}			t_texture;
 
 //colour struct
 typedef struct s_color
@@ -118,7 +118,7 @@ typedef struct s_color
     int r;
     int g;
     int b;
-} t_color;
+}		t_color;
 
 //map struct
 typedef struct s_map
@@ -129,7 +129,7 @@ typedef struct s_map
     char    player_dir;  // N, S, E, or W
     int     player_x;
     int     player_y;
-} t_map;
+}			t_map;
 
 //game struct
 typedef struct s_game
@@ -141,7 +141,7 @@ typedef struct s_game
     t_color     floor;
     t_color     ceiling;
     t_map       map;
-} t_game;
+}				t_game;
 
 /* ************************************************************************** */
 /*                                 FUNCTIONS                                  */
