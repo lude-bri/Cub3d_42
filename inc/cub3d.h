@@ -13,19 +13,21 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <mlx.h>
+# include "../lib/mlx/mlx.h"
 # include <math.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "libft/libft.h"
+# include "../lib/libft/libft_42/libft.h"
 
 # define WINDOW_WIDTH 1280
 # define WINDOW_HEIGHT 720
 # define FOV 60
 # define MOVE_SPEED 0.1
 # define ROTATE_SPEED 0.1
+
+typedef struct s_game		t_game;
 
 //image struct
 typedef struct s_img
@@ -60,7 +62,7 @@ typedef struct s_player
 typedef struct s_data
 {
     t_mlx       mlx;
-    t_game      game;
+    t_game      *game;
     t_player    player;
     int         key_w;
     int         key_s;

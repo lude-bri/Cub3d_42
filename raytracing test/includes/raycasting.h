@@ -6,7 +6,8 @@
 # define BLOCK 64
 # define PI	3.14159265359
 
-# include "../minilibx-linux/mlx.h"
+// # include "../minilibx-linux/mlx.h"
+# include "../lib/mlx/mlx.h"
 # include <X11/keysym.h>
 # include <stdio.h>
 # include <stdlib.h>

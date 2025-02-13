@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../inc/cub3d.h"
 
 // Function to check if line starts with identifier
 int	is_identifier(char *line, char *id)

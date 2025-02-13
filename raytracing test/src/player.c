@@ -26,6 +26,8 @@ int	key_press(int keysim, t_player *player)
 		player->left_rotate = true;
 	else if (keysim == XK_Right)
 		player->right_rotate = true;
+	else if (keysim == XK_Escape)
+		exit(0);
 	return (0);
 }
 
