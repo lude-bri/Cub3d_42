@@ -59,10 +59,10 @@ MLX_ARC		= $(MLX_PATH)/libmlx.a
 #                              COMPILER & FLAGS                                #
 #==============================================================================#
 
-CC			= gcc
+CC			= cc
 
-CFLAGS		= -Wall -Wextra -Werror
-DFLAGS		= -g -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror -g
+# DFLAGS		= -g -fsanitize=address
 
 INC			= -I $(INCLUDE_PATH)
 

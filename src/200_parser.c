@@ -6,17 +6,97 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 19:00:58 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/02/13 15:22:45 by luigi            ###   ########.fr       */
+/*   Updated: 2025/02/13 16:30:50 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
+static int	sanity_check(char *file)
+{
+	int		len;
+
+	len = ft_strlen(file);
+	if (len > 4 && ft_strcmp(file + len - 4, ".cub") == 0)
+		return (SUCCESS);
+	return (FAILURE);
+}
+
+static int	is_whitespace(char line)
+{
+	return ((line == ' ') || (line == '\t'));
+}
+
+static void	set_coord(char *line, t_game *game)
+{
+	int		i;
+
+	i = 0;
+	if (line[i] == 'N' && line[i + 1] == 'O')
+	{
+		line += 3;
+		game->north.path = ft_strdup(line);
+	}
+	if (line[i] == 'S' && line[i + 1] == 'O')
+	{
+		line += 3;
+		game->south.path = ft_strdup(line);
+	}
+	if (line[i] == 'W' && line[i + 1] == 'E')
+	{
+		line += 3;
+		game->west.path = ft_strdup(line);
+	}
+	if (line[i] == 'E' && line[i + 1] == 'A')
+	{
+		line += 3;
+		game->east.path = ft_strdup(line);
+	}
+}
+
+static void	set_fc(char *line, t_game *game)
+{
+	(void)line;
+	(void)game;
+}
+
+static int	init_game_struct(char *line, t_game *game)
+{
+	if (!line || *line)
+		return (FAILURE);
+	while (is_whitespace(*line))
+		line++;
+	if (*line == 'N' || *line == 'W' || *line == 'S' || *line == 'E')
+		set_coord(line, game);
+	else if (*line == 'F' || *line == 'C')
+		set_fc(line, game);
+	return (SUCCESS);
+}
+
 int	_parser(char *file, t_game *game)
 {
-	(void)file;
-	(void)game;
-	return (0);
+	int		fd;
+	char	*line;
+
+	//verify if is .cub
+	if (!sanity_check(file))
+		return (FAILURE);
+	
+	//init
+	ft_memset(game, 0, sizeof(t_game));
+	//open and read
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		return (FAILURE);
+	line = get_next_line(fd);
+	while (line)
+	{
+		if(!init_game_struct(line, game))
+			return (FAILURE);
+		// printf("line -> %s", line);
+		line = get_next_line(fd);
+	}
+	return (SUCCESS);
 }
 //
 // // Function to check if line starts with identifier
