@@ -13,6 +13,10 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+/* ************************************************************************** */
+/*                                  INCLUDES                                  */
+/* ************************************************************************** */
+
 # include "../lib/mlx/mlx.h"
 # include <math.h>
 # include <fcntl.h>
@@ -28,6 +32,13 @@
 # define ROTATE_SPEED 0.1
 
 typedef struct s_game		t_game;
+
+typedef enum e_error
+{
+	PARSE,
+	INIT_GAME,
+	INIT_WINDOW,
+};
 
 //image struct
 typedef struct s_img

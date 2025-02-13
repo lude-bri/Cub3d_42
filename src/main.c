@@ -12,15 +12,27 @@
 
 #include "../inc/cub3d.h"
 
+void	error(int	no)
+{
+	if (no == PARSE)
+		perror("Error: Failure to parse map file\n");
+	else if (no == INIT_GAME)
+		perror("Error: Failure to initialize game\n");
+	else if (no == INIT_WINDOW)
+		perror("Error: Failure to initialize window\n");
+}
+
 int	main(int ac, char **av)
 {
-	//init structs
 	t_data	data;
 
 	if (ac == 2)
 	{
+		//init structs
+		ft_memset(&data, 0, sizeof(t_data));
 		//parse everything
-		parser(av[1]);
+		if (!parser(av[1], &data.game))
+			return (error(PARSE));
 		//send the parsed map to mlx loop
 		//wait till end and close/free
 	}
