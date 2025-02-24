@@ -31,8 +31,10 @@ static void	assign_path(char *line, char *id, char **target)
 {
 	if (line[0] == id[0] && line[1] == id[1])
 	{
-		line += 3;
-		*target = ft_strdup(line);
+		while (*line != '.')
+			line++;
+		if (*line == '.')
+			*target = ft_strdup(line);
 	}
 }
 
