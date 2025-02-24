@@ -151,7 +151,7 @@ typedef struct s_game
 // Function prototypes
 
 //110 - INIT
-void	init_struct(t_data *data);
+void	init_struct(t_data **data);
 
 //200 - PARSE
 int     init_game(t_data *data, char *map_path);

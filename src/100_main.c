@@ -14,15 +14,14 @@
 
 int	main(int ac, char **av)
 {
-	t_data	data;
+	t_data	*data;
 
 	if (ac == 2)
 	{
 		//init structs
 		init_struct(&data);
-		// ft_memset(&data, 0, sizeof(t_data));
 		//parse everything
-		if (!_parser(av[1], data.game))
+		if (!_parser(av[1], data->game))
 			error(PARSE);
 		//send the parsed map to mlx loop
 		//wait till end and close/free
