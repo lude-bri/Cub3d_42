@@ -19,7 +19,8 @@ int	main(int ac, char **av)
 	if (ac == 2)
 	{
 		//init structs
-		ft_memset(&data, 0, sizeof(t_data));
+		init_struct(&data);
+		// ft_memset(&data, 0, sizeof(t_data));
 		//parse everything
 		if (!_parser(av[1], data.game))
 			error(PARSE);

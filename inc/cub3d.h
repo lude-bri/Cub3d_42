@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 14:44:23 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/02/13 15:18:54 by luigi            ###   ########.fr       */
+/*   Updated: 2025/02/24 11:38:35 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,9 @@ typedef struct s_game
 /* ************************************************************************** */
 
 // Function prototypes
+
+//110 - INIT
+void	init_struct(t_data *data);
 
 //200 - PARSE
 int     init_game(t_data *data, char *map_path);

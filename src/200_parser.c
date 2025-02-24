@@ -52,7 +52,7 @@ static void	set_fc(char *line, t_game *game)
 
 static int	init_game_struct(char *line, t_game *game)
 {
-	if (!line || *line)
+	if (!line || !*line)
 		return (FAILURE);
 	while (is_whitespace(*line))
 		line++;
@@ -71,9 +71,8 @@ int	_parser(char *file, t_game *game)
 	//verify if is .cub
 	if (!sanity_check(file))
 		return (FAILURE);
-	
 	//init
-	ft_memset(game, 0, sizeof(t_game));
+	// ft_memset(&game, 0, sizeof(t_game));
 	//open and read
 	fd = open(file, O_RDONLY);
 	if (fd < 0)

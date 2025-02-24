@@ -43,6 +43,7 @@ MLX_PATH		= $(LIBS_PATH)/mlx
 
 ### Files Source
 FILES = 100_main.c
+FILES += 110_init.c
 FILES += 200_parser.c
 FILES += 900_error.c
 
