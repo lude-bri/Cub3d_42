@@ -27,31 +27,21 @@ static int	is_whitespace(char line)
 	return ((line == ' ') || (line == '\t'));
 }
 
+static void	assign_path(char *line, char *id, char **target)
+{
+	if (line[0] == id[0] && line[1] == id[1])
+	{
+		line += 3;
+		*target = ft_strdup(line);
+	}
+}
+
 static void	set_coord(char *line, t_game *game)
 {
-	int		i;
-
-	i = 0;
-	if (line[i] == 'N' && line[i + 1] == 'O')
-	{
-		line += 3;
-		game->north.path = ft_strdup(line);
-	}
-	if (line[i] == 'S' && line[i + 1] == 'O')
-	{
-		line += 3;
-		game->south.path = ft_strdup(line);
-	}
-	if (line[i] == 'W' && line[i + 1] == 'E')
-	{
-		line += 3;
-		game->west.path = ft_strdup(line);
-	}
-	if (line[i] == 'E' && line[i + 1] == 'A')
-	{
-		line += 3;
-		game->east.path = ft_strdup(line);
-	}
+	assign_path(line, "NO", &game->north.path);
+	assign_path(line, "SO", &game->south.path);
+	assign_path(line, "WE", &game->west.path);
+	assign_path(line, "EA", &game->east.path);
 }
 
 static void	set_fc(char *line, t_game *game)
