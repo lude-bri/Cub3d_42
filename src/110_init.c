@@ -14,5 +14,9 @@
 
 void	init_struct(t_data *data)
 {
+	t_game	game;
+
 	ft_memset(data, 0, sizeof(t_data));
+	ft_memset(&game, 0, sizeof(t_game));
+	data->game = &game;
 }
