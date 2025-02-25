@@ -27,29 +27,75 @@ static int	is_whitespace(char line)
 	return ((line == ' ') || (line == '\t'));
 }
 
-static void	assign_path(char *line, char *id, char **target)
+static int	assign_path(char *line, char *id, char **target)
 {
 	if (line[0] == id[0] && line[1] == id[1])
 	{
-		while (*line != '.')
+		line += 2;
+		while (is_whitespace(*line))
 			line++;
-		if (*line == '.')
+		if (*line)
+		{
 			*target = ft_strdup(line);
+			return (SUCCESS);
+		}
+		else
+			error(PARSE);
 	}
+	return (FAILURE);
 }
 
 static void	set_coord(char *line, t_game *game)
 {
-	assign_path(line, "NO", &game->north.path);
-	assign_path(line, "SO", &game->south.path);
-	assign_path(line, "WE", &game->west.path);
-	assign_path(line, "EA", &game->east.path);
+	if (assign_path(line, "NO", &game->north.path) == SUCCESS ||
+		assign_path(line, "SO", &game->south.path) == SUCCESS ||
+		assign_path(line, "WE", &game->west.path) == SUCCESS ||
+		assign_path(line, "EA", &game->east.path) == SUCCESS)
+	{
+		return ;
+	}
+	else
+		error(PARSE);
 }
 
 static void	set_fc(char *line, t_game *game)
 {
+	char	**rgb;
+	bool	fc; //floor is true - ceiling is false
+
+	fc = false;
+	if (*line == 'F')
+		fc = true;
+	line++;
+	if (!is_whitespace(*line))
+		error(PARSE);
+	while (is_whitespace(*line))
+		line++;
+	if (line)
+	{
+		rgb = ft_split(line, ',');
+		if (fc == true)
+		{
+			game->floor.r = ft_atoi(rgb[0]);
+			game->floor.g = ft_atoi(rgb[1]);
+			game->floor.b = ft_atoi(rgb[2]);
+		}
+		else
+		{
+			game->ceiling.r = ft_atoi(rgb[0]);
+			game->ceiling.g = ft_atoi(rgb[1]);
+			game->ceiling.b = ft_atoi(rgb[2]);
+		}
+	}
+	else
+		error(PARSE);
+}
+
+static int	set_map(char *line, t_game *game)
+{
 	(void)line;
 	(void)game;
+	return (0);
 }
 
 static int	init_game_struct(char *line, t_game *game)
@@ -62,6 +108,9 @@ static int	init_game_struct(char *line, t_game *game)
 		set_coord(line, game);
 	else if (*line == 'F' || *line == 'C')
 		set_fc(line, game);
+	if (game->count >= 8) //8 is the minimum of a correct map
+		if (!set_map(line, game))
+			return (FAILURE);
 	return (SUCCESS);
 }
 
@@ -82,8 +131,8 @@ int	_parser(char *file, t_game *game)
 	{
 		if(!init_game_struct(line, game))
 			return (FAILURE);
-		// printf("line -> %s", line);
 		line = get_next_line(fd);
+		game->count++;
 	}
 	return (SUCCESS);
 }

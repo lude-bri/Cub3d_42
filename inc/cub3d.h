@@ -40,6 +40,12 @@
 # define PI 3.14159265359
 # define TWO_D 0 
 
+//reminder of player coord when spawn
+//NORTH -> PI / 2
+//SOUTH -> 3 * PI / 2
+//WEST -> PI
+//EAST -> PI * 2
+
 /* ************************************************************************** */
 /*                                  ENUMS								  	  */
 /* ************************************************************************** */
@@ -65,6 +71,7 @@ typedef enum e_error
 /* ************************************************************************** */
 
 typedef struct s_game		t_game;
+typedef struct s_map		t_map;
 
 //image struct
 typedef struct s_img
@@ -97,11 +104,12 @@ typedef struct s_player
 //keys + events struct
 typedef struct s_data
 {
-    void    *mlx;
-    void    *win;
-    void    *wall_t;
-    t_img   img;
+    void		*mlx;
+    void		*win;
+    void		*wall_t;
+    t_img		img;
     t_game      *game;
+    t_map       *map;
     t_player    player;
 	char		*data;
 }				t_data;
@@ -137,6 +145,7 @@ typedef struct s_map
 //game struct
 typedef struct s_game
 {
+	int			count;
     t_texture   north;
     t_texture   south;
     t_texture   west;
@@ -152,7 +161,12 @@ typedef struct s_game
 
 // Function prototypes
 
+//110 - INIT
+void	init_struct(t_data **data);
+
 //200 - PARSE
+
+
 //int     init_game(t_data *data, char *map_path);
 int     init_mlx(t_data *data);
 int     parse_file(char *filename, t_game *game);

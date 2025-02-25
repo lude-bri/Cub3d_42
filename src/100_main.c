@@ -24,21 +24,22 @@ void	init_game(t_data *game)
 
 int	main(int ac, char **av)
 {
-	t_data	data;
+	t_data	*data;
 
 	if (ac == 2)
 	{
 		//init structs
-		ft_memset(&data, 0, sizeof(t_data));
-		init_game(&data);
+		// ft_memset(&data, 0, sizeof(t_data));
+		init_struct(&data);
 		//parse everything
-		if (!_parser(av[1], data.game))
+		if (!_parser(av[1], data->game))
 			error(PARSE);
+		init_game(data);
 		//send the parsed map to mlx loop
-		mlx_hook(data.win, 2, 1L<<0, key_press, &data.player);
-		mlx_hook(data.win, 3, 1L<<1, key_release, &data.player);
-		mlx_loop_hook(data.mlx, draw_loop, &data);
-		mlx_loop(data.mlx);
+		mlx_hook(data->win, 2, 1L<<0, key_press, &data->player);
+		mlx_hook(data->win, 3, 1L<<1, key_release, &data->player);
+		mlx_loop_hook(data->mlx, draw_loop, &data);
+		mlx_loop(data->mlx);
 		return (0);
 		//wait till end and close/free
 	}

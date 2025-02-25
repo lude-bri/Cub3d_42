@@ -31,7 +31,7 @@ bool	touch_obs(float px, float py, t_data *data)
 
 	x = px / BLOCK;
 	y = py / BLOCK;
-	if (data->map[y][x] == '1')
+	if (data->map->grid[y][x] == '1')
 		return (true);
 	return (false);
 }
@@ -99,7 +99,7 @@ void	draw_map(t_data *data)
 	int		y;
 	int		x;
 
-	map = data->map;
+	map = data->map->grid;
 	y = -1;
 	while (map[++y])
 	{
