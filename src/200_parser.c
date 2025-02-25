@@ -91,11 +91,21 @@ static void	set_fc(char *line, t_game *game)
 		error(PARSE);
 }
 
-static int	set_map(char *line, t_game *game)
+static int	set_map(char *line, t_map *map)
 {
-	(void)line;
-	(void)game;
-	return (0);
+	static int	i = 0;
+
+	if (!line)
+		error(PARSE);
+	if (!map->grid)
+		map->grid = malloc(sizeof(char *) * 1024);
+	if (!map->grid)
+		error(PARSE);
+	map->grid[i++] = line;
+	//valid map
+	//surrounded by 1(wall), else error
+	//the first and the last must be all 1 or spaces
+	return (SUCCESS);
 }
 
 static int	init_game_struct(char *line, t_game *game)
@@ -109,7 +119,7 @@ static int	init_game_struct(char *line, t_game *game)
 	else if (*line == 'F' || *line == 'C')
 		set_fc(line, game);
 	if (game->count >= 8) //8 is the minimum of a correct map
-		if (!set_map(line, game))
+		if (!set_map(line, &game->map))
 			return (FAILURE);
 	return (SUCCESS);
 }

@@ -18,4 +18,5 @@ void	init_struct(t_data **data)
 	ft_memset(*data, 0, sizeof(t_data));
 	(*data)->game = malloc(sizeof(t_game));
 	ft_memset((*data)->game, 0, sizeof(t_game));
+	// (*data)->game->map.grid = ft_calloc(0, sizeof(char *));
 }
