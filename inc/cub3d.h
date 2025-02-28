@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 14:44:23 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/02/25 15:52:46 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:16:11 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,9 @@ typedef enum e_status
 //Error Handlers
 typedef enum e_error
 {
-	PARSE,
 	ARG,
+	PARSE,
+	VALIDATE,
 	INIT_GAME,
 	INIT_WINDOW,
 }	t_error;
@@ -164,26 +165,37 @@ typedef struct s_game
 //110 - INIT
 void	init_struct(t_data **data);
 
-//200 - PARSE
-
-
-//int     init_game(t_data *data, char *map_path);
-int     init_mlx(t_data *data);
-int     parse_file(char *filename, t_game *game);
-int     handle_keypress(int keycode, t_data *data);
-int     handle_keyrelease(int keycode, t_data *data);
-int     handle_exit(t_data *data);
-void    raycasting(t_data *data);
+//200 - PARSER
 int		_parser(char *file, t_game *game);
+int		init_game_struct(char *line, t_game *game);
 
+//201 - SETTERS
+int		is_whitespace(char line);
+int		assign_path(char *line, char *id, char **target);
+int		set_map(char *line, t_map *map);
+void	set_fc(char *line, t_game *game);
+void	set_coord(char *line, t_game *game);
+
+//210 - VALIDATE
+int		_validate_data(t_data *data);
+
+//300 - RAYCASTING
+void	put_pixel(int x, int y, int color, t_data *data);
+bool	touch_obs(float px, float py, t_data *data);
+float	fixed_dist(float x1, float y1, float x2, t_data *data);
+void	draw_line(t_player *player, float angle, int i, t_data *data);
+void	draw_square(int x, int y, int size, t_data *data);
+void	draw_map(t_data *data);
+void	clear_image(t_data *data);
+int		draw_loop(t_data *data);
+
+//400 - PLAYER
 void	init_player(t_player *player);
 int		key_press(int keysim, t_player *player);
 int		key_release(int keysim, t_player *player);
 void	rotate_player(t_player *player, float angle_speed);
 void	move_player_position(t_player *player, int speed, float cos_angle, float sin_angle);
 void	move_player(t_player *player);
-
-int	draw_loop(t_data *data);
 
 //900 - ERROR HANDLERS
 void	error(int	no);
