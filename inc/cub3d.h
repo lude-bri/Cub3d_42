@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 14:44:23 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/03/05 11:02:27 by lude-bri         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:36:44 by lude-bri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,10 @@ typedef struct s_texture
 //colour struct
 typedef struct s_color
 {
-    int r;
-    int g;
-    int b;
+    int				r;
+    int				g;
+    int				b;
+	unsigned long	hex;
 }		t_color;
 
 //map struct
@@ -181,13 +182,14 @@ void	set_fc(char *line, t_game *game);
 void	set_coord(char *line, t_game *game);
 
 //210 - VALIDATE
-int		_validate_data(t_game *game);
+int		_validate_data(t_game **game);
 int		validate_textures(t_game *game);
 int		validate_rgb(t_game *game);
 int		validate_map(t_map *map);
 
 //211 - CHECKER
 int		check_texture(char *path);
+int		out_of_range(t_game *game);
 
 //300 - RAYCASTING
 void	put_pixel(int x, int y, int color, t_data *data);

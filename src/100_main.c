@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 14:47:22 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/02/27 23:18:21 by luigi            ###   ########.fr       */
+/*   Updated: 2025/03/05 11:36:46 by lude-bri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int ac, char **av)
 			error(PARSE);
 
 		//validate data
-		if (!_validate_data(data->game))
+		if (!_validate_data(&data->game))
 			error(VALIDATE);
 
 		// init_game(data);

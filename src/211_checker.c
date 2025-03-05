@@ -6,7 +6,7 @@
 /*   By: lude-bri <lude-bri@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:31:30 by lude-bri          #+#    #+#             */
-/*   Updated: 2025/03/05 11:01:59 by lude-bri         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:18:04 by lude-bri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,23 @@ static int	check_directory(char *path)
 	if (fd < 0)
 		return (FAILURE);
 	close(fd);
+	return (SUCCESS);
+}
+
+int	out_of_range(t_game *game)
+{
+	if (game->floor.r < 0 || game->floor.r > 255)
+		return (FAILURE);
+	if (game->floor.g < 0 || game->floor.g > 255)
+		return (FAILURE);
+	if (game->floor.b < 0 || game->floor.b > 255)
+		return (FAILURE);
+	if (game->ceiling.r < 0 || game->ceiling.r > 255)
+		return (FAILURE);
+	if (game->ceiling.g < 0 || game->ceiling.g > 255)
+		return (FAILURE);
+	if (game->ceiling.b < 0 || game->ceiling.b > 255)
+		return (FAILURE);
 	return (SUCCESS);
 }
 
