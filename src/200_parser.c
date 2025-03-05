@@ -13,12 +13,12 @@
 #include "../inc/cub3d.h"
 
 //verify if it is .cub
-static int	sanity_check(char *file)
+int	sanity_check(char *file, char *type)
 {
 	int		len;
 
 	len = ft_strlen(file);
-	if (len > 4 && ft_strcmp(file + len - 4, ".cub") == 0)
+	if (len > 4 && ft_strcmp(file + len - 4, type) == 0)
 		return (SUCCESS);
 	return (FAILURE);
 }
@@ -44,7 +44,7 @@ int	_parser(char *file, t_game *game)
 	int		fd;
 	char	*line;
 
-	if (!sanity_check(file))
+	if (!sanity_check(file, ".cub"))
 		return (FAILURE);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)

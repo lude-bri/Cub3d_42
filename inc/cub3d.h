@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 14:44:23 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/03/05 10:34:12 by lude-bri         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:02:27 by lude-bri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void	init_struct(t_data **data);
 //200 - PARSER
 int		_parser(char *file, t_game *game);
 int		init_game_struct(char *line, t_game *game);
+int		sanity_check(char *file, char *type);
 
 //201 - SETTERS
 int		is_whitespace(char line);

@@ -6,7 +6,7 @@
 /*   By: lude-bri <lude-bri@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:31:30 by lude-bri          #+#    #+#             */
-/*   Updated: 2025/03/05 10:57:52 by lude-bri         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:01:59 by lude-bri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	check_texture(char *path)
 	char	*new_path;
 
 	new_path = ft_strtrim(path, "\n");
+	if (!sanity_check(new_path, ".xpm"))
+		return (FAILURE);
 	if (!check_directory(new_path))
 		return (FAILURE);
 	fd = open(new_path, O_RDONLY);
