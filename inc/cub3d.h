@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 14:44:23 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/02/27 23:16:11 by luigi            ###   ########.fr       */
+/*   Updated: 2025/03/05 10:34:12 by lude-bri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ typedef enum e_status
 typedef enum e_error
 {
 	ARG,
+	RGB,
+	MAP,
 	PARSE,
+	TEXTURE,
 	VALIDATE,
 	INIT_GAME,
 	INIT_WINDOW,
@@ -177,7 +180,13 @@ void	set_fc(char *line, t_game *game);
 void	set_coord(char *line, t_game *game);
 
 //210 - VALIDATE
-int		_validate_data(t_data *data);
+int		_validate_data(t_game *game);
+int		validate_textures(t_game *game);
+int		validate_rgb(t_game *game);
+int		validate_map(t_map *map);
+
+//211 - CHECKER
+int		check_texture(char *path);
 
 //300 - RAYCASTING
 void	put_pixel(int x, int y, int color, t_data *data);

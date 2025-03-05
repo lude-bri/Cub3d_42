@@ -47,6 +47,7 @@ FILES += 110_init.c
 FILES += 200_parser.c
 FILES += 201_setters.c
 FILES += 210_validate.c
+FILES += 211_checker.c
 FILES += 300_raycasting.c
 FILES += 400_player_movement.c
 FILES += 900_error.c

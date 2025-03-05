@@ -29,13 +29,16 @@ int	main(int ac, char **av)
 	if (ac == 2)
 	{
 		//init structs
-		// ft_memset(&data, 0, sizeof(t_data));
 		init_struct(&data);
+
 		//parse everything
 		if (!_parser(av[1], data->game))
 			error(PARSE);
-		if (!_validate_data(data))
+
+		//validate data
+		if (!_validate_data(data->game))
 			error(VALIDATE);
+
 		// init_game(data);
 		//send the parsed map to mlx loop
 		// mlx_hook(data->win, 2, 1L<<0, key_press, &data->player);
