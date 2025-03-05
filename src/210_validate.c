@@ -6,7 +6,7 @@
 /*   By: lude-bri <lude-bri@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:27:45 by luigi             #+#    #+#             */
-/*   Updated: 2025/03/05 11:56:21 by lude-bri         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:33:27 by lude-bri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ int	validate_rgb(t_game *game)
 int	validate_map(t_map *map)
 {
 	(void)map;
+	//validar se esta rodeado por paredes
+	//a primeira e a ultima linha necessariamente tem que ser composta por 1 ou espacos
+	//o primeiro caracter 
 	return (SUCCESS);
 }
 
