@@ -87,19 +87,19 @@ typedef struct s_img
 //player struct -> coord
 typedef struct s_player
 {
-    float  x;
-    float  y;
-    float   angle;
-    double  dir_x;
-    double  dir_y;
-    double  plane_x;
-    double  plane_y;
-	bool         key_w;
-    bool         key_s;
-    bool         key_a;
-    bool         key_d;
-    bool         key_left;
-    bool         key_right;
+    float		x;
+    float		y;
+    float		angle;
+    double		dir_x;
+    double		dir_y;
+    double		plane_x;
+    double		plane_y;
+	bool        key_w;
+    bool        key_s;
+    bool        key_a;
+    bool        key_d;
+    bool        key_left;
+    bool        key_right;
 }			t_player;
 
 //keys + events struct
