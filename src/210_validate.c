@@ -46,9 +46,43 @@ int	validate_rgb(t_game *game)
 	return (SUCCESS);
 }
 
+int	validate_rows(t_map *map, int y, int *player_count)
+{
+	int	x;
+
+	x = 0;
+	//fim da grid
+	if (y >= HEIGHT)
+		return (FAILURE);
+	if (map->grid[y] == NULL)
+		return (FAILURE);
+	//verificar largura
+	while (map->grid[y][x] != '\0')
+		x++;
+	if (x != WIDTH)
+		return (FAILURE)
+}
+
 int	validate_map(t_map *map)
 {
-	(void)map;
+	int	player_count;
+
+	player_count = 0;
+	//ver se mapa existe
+	if (WIDTH <= 0 || HEIGHT <= 0 || map->grid == NULL)
+		return (FAILURE);
+	//validar caracteres e verificar se o jogador existe
+	if (!validate_rows(map, 0, &player_count))
+		return (FAILURE);
+	//Verificar se um e so um jogador existe
+	if (player_count != 1)
+		return (FAILURE);
+	//Varificar se o mapa esta rodeado de paredes, neste caso em cima e baixo
+	if (!check_edge(map, map->grid[0], 0) || !check_edge(map, map->grid[HEIGHT - 1], 0))
+		return (FAILURE);
+	//o mesmo, so que os lados
+	if (!check_sides(map, 0, 0) || !check_sides(map, 0, WIDTH - 1))
+		return (FAILURE);
 	//validar se esta rodeado por paredes
 	//a primeira e a ultima linha necessariamente tem que ser composta por 1 ou espacos
 	//o primeiro caracter 
