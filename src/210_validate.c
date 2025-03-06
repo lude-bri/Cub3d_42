@@ -46,12 +46,12 @@ int	validate_rgb(t_game *game)
 	return (SUCCESS);
 }
 
-static int	verify_player(t_map *map, char c, int *player_count)
+static int	verify_player(t_map *map, char c, int player_count)
 {
+	(void)player_count;
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
 		map->player_dir = c;
-		player_count++;
 		return (SUCCESS);
 	}
 	return (FAILURE);
@@ -63,7 +63,6 @@ int	validate_rows(t_map *map, int y)
 	int	player_count;
 
 	player_count = 0;
-	
 	//fim da grid
 	if (y >= map->height)
 		return (FAILURE);
@@ -79,7 +78,7 @@ int	validate_rows(t_map *map, int y)
 			if (map->grid[y][x] != ' ' && map->grid[y][x] != '0'
 				&& map->grid[y][x] != '1' && map->grid[y][x] != '\n')
 			{
-				if (!verify_player(map, map->grid[y][x], &player_count))
+				if (!verify_player(map, map->grid[y][x], player_count++))
 					return (FAILURE);
 				else
 				{
@@ -126,6 +125,111 @@ static int	set_map_coord(t_map *map)
 	return (SUCCESS);
 }
 
+static char	*create_border_line(int width)
+{
+	char	*line;
+	int		i;
+
+	line = malloc(sizeof(char) * (width + 1));
+	if (!line)
+		return (NULL);
+	i = -1;
+	while (++i < width)
+		line[i] = '#';
+	line[i] = '\0';
+	return (line);
+}
+
+static void	transform_map(char **map, int w)
+{
+	int		x;
+	int		y;
+	char	*temp;
+
+	y = 0;
+	while (map[y])
+	{
+		x = 0;
+		temp = map[y];
+		while (temp[x] && temp[x] != '\n')
+		{
+			if (temp[x] == ' ')
+				temp[x] = '#';
+			x++;
+		}
+		while (x < w)
+		{
+			temp[x] = '#';
+			x++;
+		}
+		temp[x] = '\0';
+		y++;
+	}
+}
+
+static char	**copy_map(t_map *map)
+{
+	char	**map_copy;
+	int		i;
+	int		new_height;
+	int		new_widht;
+
+	new_height = map->height + 2;
+	new_widht = map->width + 2;
+	
+	map_copy = malloc(sizeof(char *) * (new_height + 1));
+	if (!map_copy)
+		return (NULL);
+	map_copy[0] = create_border_line(new_widht);
+	if (!map_copy[0])
+		return (NULL);
+	i = -1;
+	while (++i < map->height)
+	{
+		map_copy[i + 1] = malloc(sizeof(char) * (new_widht + 1));
+		if (!map_copy[i + 1])
+			return (NULL);
+		map_copy[i + 1][0] = '#';
+		ft_strlcpy(&map_copy[i + 1][1], map->grid[i], map->width + 1);
+	}
+	map_copy[new_height - 1] = create_border_line(new_height);
+	if (!map_copy[new_height - 1])
+		return (NULL);
+	map_copy[new_height] = NULL;
+	transform_map(map_copy, new_widht);
+	return (map_copy);
+}
+
+
+static int	validate_walls(t_map *map)
+{
+	char	**map_copy;
+	int		i;
+
+	map_copy = copy_map(map);
+	i = -1;
+	while (map_copy[++i])
+		printf("%s\n", map_copy[i]);
+	if (!map_copy)
+		return (FAILURE);
+	if (map->player_x < 0 || map->player_x >= map->width
+		|| map->player_y < 0 || map->player_y >= map->height)
+	{
+		i = -1;
+		while (map_copy[++i])
+			free(map_copy[i]);
+		free(map_copy);
+		return (FAILURE);
+	}
+	//verificar os adjacentes do map_copy
+	//dar free
+	i = 0;
+	while (map_copy[i])
+		free(map_copy[i++]);
+	free(map_copy);
+	return (SUCCESS);
+}
+
 int	validate_map(t_map *map)
 {
 	//ver se mapa existe
@@ -137,6 +241,8 @@ int	validate_map(t_map *map)
 	if (!validate_rows(map, 0))
 		return (FAILURE);
 	//Varificar se o mapa esta rodeado de paredes, neste caso em cima e baixo (flood_fill)
+	if (!validate_walls(map))
+		return (FAILURE);
 	return (SUCCESS);
 }
 
