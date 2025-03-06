@@ -46,22 +46,52 @@ int	validate_rgb(t_game *game)
 	return (SUCCESS);
 }
 
-int	validate_rows(t_map *map, int y, int *player_count)
+static int	verify_player(t_map *map, char c, int *player_count)
+{
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+	{
+		map->player_dir = c;
+		player_count++;
+		return (SUCCESS);
+	}
+	return (FAILURE);
+}
+
+int	validate_rows(t_map *map, int y)
 {
 	int	x;
+	int	player_count;
 
-	x = 0;
-	(void)player_count;
+	player_count = 0;
+	
 	//fim da grid
-	if (y >= HEIGHT)
+	if (y >= map->height)
 		return (FAILURE);
 	if (map->grid[y] == NULL)
 		return (FAILURE);
-	//verificar largura
-	while (map->grid[y][x] != '\0')
-		x++;
-	if (x != WIDTH)
-		return (FAILURE);
+	
+	//verificar largura, possible characters(6) e existencia de player
+	while (map->grid[y])
+	{
+		x = -1;
+		while (map->grid[y][++x] != '\n')
+		{
+			if (map->grid[y][x] != ' ' && map->grid[y][x] != '0'
+				&& map->grid[y][x] != '1' && map->grid[y][x] != '\n')
+			{
+				if (!verify_player(map, map->grid[y][x], &player_count))
+					return (FAILURE);
+				else
+				{
+					map->player_x = x;
+					map->player_y = y;
+				}
+			}
+		}
+		y++;
+	}
+	if (player_count != 1)
+		error(PLAYER);
 	return (SUCCESS);
 }
 
@@ -98,29 +128,15 @@ static int	set_map_coord(t_map *map)
 
 int	validate_map(t_map *map)
 {
-	int	player_count;
-
-	player_count = 0;
 	//ver se mapa existe
 	if (!set_map_coord(map))
 		return (FAILURE);
 	if (map->width <= 0 || map->height <= 0 || map->grid == NULL)
 		return (FAILURE);
 	//validar caracteres e verificar se o jogador existe
-	if (!validate_rows(map, 0, &player_count))
+	if (!validate_rows(map, 0))
 		return (FAILURE);
-	//Verificar se um e so um jogador existe
-	if (player_count != 1)
-		return (FAILURE);
-	//Varificar se o mapa esta rodeado de paredes, neste caso em cima e baixo
-	// if (!check_edge(map, map->grid[0], 0) || !check_edge(map, map->grid[HEIGHT - 1], 0))
-	// 	return (FAILURE);
-	// //o mesmo, so que os lados
-	// if (!check_sides(map, 0, 0) || !check_sides(map, 0, WIDTH - 1))
-	// 	return (FAILURE);
-	//validar se esta rodeado por paredes
-	//a primeira e a ultima linha necessariamente tem que ser composta por 1 ou espacos
-	//o primeiro caracter 
+	//Varificar se o mapa esta rodeado de paredes, neste caso em cima e baixo (flood_fill)
 	return (SUCCESS);
 }
 

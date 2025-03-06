@@ -64,6 +64,7 @@ typedef enum e_error
 	RGB,
 	MAP,
 	PARSE,
+	PLAYER,
 	TEXTURE,
 	VALIDATE,
 	INIT_GAME,
