@@ -22,4 +22,8 @@ void	error(int	no)
 		ft_putstr_fd("Error: Failure to initialize window\n", 2);
 	else if (no == ARG)
 		ft_putstr_fd("Error: Try ./cub3D <map.cub>\n", 2);
+	else if (no == MAP)
+		ft_putstr_fd("Error: Invalid character on map\n", 2);
+	//add frees !!!!!!!!!
+	exit (no);
 }

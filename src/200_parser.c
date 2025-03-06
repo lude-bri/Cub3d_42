@@ -27,7 +27,7 @@ int	init_game_struct(char *line, t_game *game)
 {
 	if (!line || !*line)
 		return (FAILURE);
-	while (is_whitespace(*line))
+	while (is_whitespace(*line) && game->count < 8)
 		line++;
 	if (*line == 'N' || *line == 'W' || *line == 'S' || *line == 'E')
 		set_coord(line, game);
