@@ -114,14 +114,13 @@ static int	set_map_coord(t_map *map)
 		x = 0;
 		if (map->grid[y][x] == '\t')
 			error(MAP);
-		while (map->grid[y][x] != '\n')
+		while (map->grid[y][x] && map->grid[y][x] != '\n')
 			x++;
-		if (max_width == 0)
+		if (x > max_width)
 			max_width = x;
-		if (max_width > x)
-			map->width = max_width;
 		y++;
 	}
+	map->width = max_width;
 	return (SUCCESS);
 }
 
@@ -222,7 +221,7 @@ static int	validate_walls(t_map *map)
 		return (FAILURE);
 	}
 	//verificar os adjacentes do map_copy
-	check_adjacent(map_copy));
+	// check_adjacent(map_copy));
 	//dar free
 	i = 0;
 	while (map_copy[i])
