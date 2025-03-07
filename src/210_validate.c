@@ -35,6 +35,9 @@ int	validate_textures(t_game *game)
 
 int	validate_rgb(t_game *game)
 {
+	if (game->floor.r == -1 || game->floor.g == -1 || game->floor.b == -1
+		|| game->ceiling.r == -1 || game->ceiling.g == -1 || game->ceiling.b == -1)
+		return (FAILURE);
 	if (ft_isdigit(game->floor.r) && ft_isdigit(game->floor.g)
 		&& ft_isdigit(game->floor.b) && ft_isdigit(game->ceiling.r)
 		&& ft_isdigit(game->ceiling.g) && ft_isdigit(game->ceiling.b))
@@ -197,8 +200,6 @@ static char	**copy_map(t_map *map)
 	transform_map(map_copy, new_widht);
 	return (map_copy);
 }
-
-
 
 static int	validate_walls(t_map *map)
 {

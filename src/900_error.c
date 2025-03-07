@@ -22,10 +22,14 @@ void	error(int	no)
 		ft_putstr_fd("Error: Failure to initialize window\n", 2);
 	else if (no == ARG)
 		ft_putstr_fd("Error: Try ./cub3D <map.cub>\n", 2);
+	else if (no == RGB)
+		ft_putstr_fd("Error: Invalid or missing color\n", 2);
 	else if (no == MAP)
 		ft_putstr_fd("Error: Invalid character on map\n", 2);
 	else if (no == PLAYER)
 		ft_putstr_fd("Error: More than one or not enough players\n", 2);
+	else if (no == TEXTURE)
+		ft_putstr_fd("Error: Invalid texture\n", 2);
 	//add frees !!!!!!!!!
 	exit (no);
 }

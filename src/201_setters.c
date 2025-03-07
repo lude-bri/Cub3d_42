@@ -19,14 +19,18 @@ int	is_whitespace(char line)
 
 int	assign_path(char *line, char *id, char **target)
 {
+	char	*new_line;
+
 	if (line[0] == id[0] && line[1] == id[1])
 	{
 		line += 2;
 		while (is_whitespace(*line))
 			line++;
-		if (*line)
+		line = ft_strtrim(line, "\n");
+		new_line = ft_strtrim(line, " ");
+		if (*line && *new_line)
 		{
-			*target = ft_strdup(line);
+			*target = ft_strdup(new_line);
 			return (SUCCESS);
 		}
 		else
@@ -51,6 +55,7 @@ void	set_coord(char *line, t_game *game)
 void	set_fc(char *line, t_game *game)
 {
 	char	**rgb;
+	int		i;
 	bool	fc; //floor is true - ceiling is false
 
 	fc = false;
@@ -64,6 +69,10 @@ void	set_fc(char *line, t_game *game)
 	if (line)
 	{
 		rgb = ft_split(line, ',');
+		i = -1;
+		while (++i <= 2)
+			if (!rgb[i] || ft_strcmp(rgb[i], "\n") == 0)
+				error(RGB);
 		if (fc == true)
 		{
 			game->floor.r = ft_atoi(rgb[0]);

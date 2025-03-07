@@ -45,7 +45,8 @@ int	check_texture(char *path)
 	int		fd;
 	char	*new_path;
 
-	new_path = ft_strtrim(path, "\n");
+	// path = ft_strtrim(path, "\n");
+	new_path = ft_strtrim(path, " ");
 	if (!sanity_check(new_path, ".xpm"))
 		return (FAILURE);
 	if (!check_directory(new_path))
