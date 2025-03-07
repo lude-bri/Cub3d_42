@@ -176,7 +176,6 @@ static char	**copy_map(t_map *map)
 
 	new_height = map->height + 2;
 	new_widht = map->width + 2;
-	
 	map_copy = malloc(sizeof(char *) * (new_height + 1));
 	if (!map_copy)
 		return (NULL);
@@ -201,6 +200,7 @@ static char	**copy_map(t_map *map)
 }
 
 
+
 static int	validate_walls(t_map *map)
 {
 	char	**map_copy;
@@ -222,6 +222,7 @@ static int	validate_walls(t_map *map)
 		return (FAILURE);
 	}
 	//verificar os adjacentes do map_copy
+	check_adjacent(map_copy));
 	//dar free
 	i = 0;
 	while (map_copy[i])
