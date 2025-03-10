@@ -12,6 +12,14 @@
 
 #include "../inc/cub3d.h"
 
+bool	is_map(t_game *game)
+{
+	if (game->count >= 8 && game->south.path && game->north.path
+		&& game->east.path && game->west.path)
+		return (true);
+	return (false);
+}
+
 //verify if it is .cub
 int	sanity_check(char *file, char *type)
 {
@@ -27,13 +35,13 @@ int	init_game_struct(char *line, t_game *game)
 {
 	if (!line || !*line)
 		return (FAILURE);
-	while (is_whitespace(*line) && game->count < 8)
+	while (is_whitespace(*line))
 		line++;
 	if (*line == 'N' || *line == 'W' || *line == 'S' || *line == 'E')
 		set_coord(line, game);
 	else if (*line == 'F' || *line == 'C')
 		set_fc(line, game);
-	if (game->count >= 8) //8 is the minimum of a correct map
+	else if (is_map(game) == true) //8 is the minimum of a correct map
 		if (!set_map(line, &game->map))
 			return (FAILURE);
 	return (SUCCESS);
