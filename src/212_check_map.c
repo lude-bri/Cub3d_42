@@ -62,6 +62,11 @@ int	check_top(t_map *map, char **map_copy)
 			x++;
 		if (map_copy[y][x] == '\n' || map_copy[y][x] == '\0')
 			y++;
+		if (map_copy[y][x] != '1' && map_copy[y][x] != '#')
+		{
+			valid = false;
+			break;
+		}
 		else if (map_copy[y][x] == '1')
 		{
 			if (map_copy[y + 1][x] != '1')
@@ -112,8 +117,29 @@ int	check_sides(t_map *map, char **map_copy)
 
 int	check_holes(t_map *map, char **map_copy)
 {
+	int		x;
+	int		y;
+	bool	valid;
+
 	(void)map;
-	(void)map_copy;
+	valid = true;
+	y = -1;
+	while (map_copy[++y])
+	{
+		x = 0;
+		while (x < (int)ft_strlen(&map_copy[y][x]))
+		{
+			if (map_copy[y][x] == '0')
+			{
+				if (map_copy[y][x + 1] == '#' || map_copy[y][x - 1] == '#'
+					|| map_copy[y + 1][x] == '#' || map_copy[y - 1][x] == '#')
+					valid = false;
+			}
+			x++;
+		}
+	}
+	if (valid == false)
+		return (FAILURE);
 	return(SUCCESS);
 }
 
