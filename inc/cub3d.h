@@ -192,6 +192,9 @@ int		validate_map(t_map *map);
 int		check_texture(char *path);
 int		out_of_range(t_game *game);
 
+//212 - CHECK MAP
+int		check_map(char **map);
+
 //300 - RAYCASTING
 void	put_pixel(int x, int y, int color, t_data *data);
 bool	touch_obs(float px, float py, t_data *data);

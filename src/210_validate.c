@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+#include <string.h>
 
 static unsigned long	convert_rgb_to_hex(t_color *color)
 {
@@ -222,7 +223,8 @@ static int	validate_walls(t_map *map)
 		return (FAILURE);
 	}
 	//verificar os adjacentes do map_copy
-	// check_adjacent(map_copy));
+	if (!check_map(map_copy))
+		return (FAILURE);
 	//dar free
 	i = 0;
 	while (map_copy[i])
