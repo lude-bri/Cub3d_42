@@ -38,7 +38,7 @@
 # define MOVE_SPEED 2
 # define ROTATE_SPEED 0.5
 # define PI 3.14159265359
-# define TWO_D 0 
+# define TWO_D 1 
 
 //reminder of player coord when spawn
 //NORTH -> PI / 2
