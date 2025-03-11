@@ -79,8 +79,34 @@ int	check_top(t_map *map, char **map_copy)
 
 int	check_sides(t_map *map, char **map_copy)
 {
+	int		x;
+	int		y;
+	bool	valid;
+
 	(void)map;
-	(void)map_copy;
+	valid = true;
+	y = 0;
+	while (map_copy[y])
+		y++;
+	x = -1;
+	while (++x < y)
+	{
+		if (map_copy[x][1] != '#' && map_copy[x][1] != '1')
+			valid = false;
+	}
+	x = 0;
+	y = 0;
+	while (map_copy[y][x])
+		x++;
+	x--;
+	while (map_copy[y])
+	{
+		if (map_copy[y][x - 1] != '#' && map_copy[y][x - 1] != '1')
+			valid = false;
+		y++;
+	}
+	if (valid == false)
+		return (FAILURE);
 	return(SUCCESS);
 }
 
@@ -103,9 +129,5 @@ int	check_map(t_map *map, char **map_copy)
 		return (FAILURE);
 	if (!check_holes(map, map_copy))
 		return (FAILURE);
-
 	return (SUCCESS);
-	//se a linha so contiver '#' passa a frente
-	//se a linha contiver algo, ela passa ser a primeira linha
-	//a primeira linha so pode ter '#' e '1', nada mais
 }
