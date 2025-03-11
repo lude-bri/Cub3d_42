@@ -209,8 +209,8 @@ static int	validate_walls(t_map *map)
 
 	map_copy = copy_map(map);
 	i = -1;
-	while (map_copy[++i])
-		printf("%s\n", map_copy[i]);
+	// while (map_copy[++i])
+	// 	printf("%s\n", map_copy[i]);
 	if (!map_copy)
 		return (FAILURE);
 	if (map->player_x < 0 || map->player_x >= map->width
@@ -223,7 +223,7 @@ static int	validate_walls(t_map *map)
 		return (FAILURE);
 	}
 	//verificar os adjacentes do map_copy
-	if (!check_map(map_copy))
+	if (!check_map(map, map_copy))
 		return (FAILURE);
 	//dar free
 	i = 0;

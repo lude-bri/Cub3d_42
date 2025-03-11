@@ -193,7 +193,11 @@ int		check_texture(char *path);
 int		out_of_range(t_game *game);
 
 //212 - CHECK MAP
-int		check_map(char **map);
+int		check_map(t_map *map, char **map_copy);
+int		check_top(t_map *map, char **map_copy);
+int		check_bottom(t_map *map, char **map_copy);
+int		check_sides(t_map *map, char **map_copy);
+int		check_holes(t_map *map, char **map_copy);
 
 //300 - RAYCASTING
 void	put_pixel(int x, int y, int color, t_data *data);
