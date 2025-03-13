@@ -53,6 +53,7 @@ int	main(int ac, char **av)
 		//send the parsed map to mlx loop
 		mlx_hook(data->win, 2, 1L<<0, key_press, &data->player);
 		mlx_hook(data->win, 3, 1L<<1, key_release, &data->player);
+		mlx_hook(data->win, 17, 1L<<17, game_exit, data);
 		mlx_loop_hook(data->mlx, draw_loop, data);
 		mlx_loop(data->mlx);
 		return (0);

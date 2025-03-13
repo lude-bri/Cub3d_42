@@ -35,7 +35,6 @@
 # define HEIGHT 720
 # define FOV 60
 # define BLOCK 64
-# define MOVE_SPEED 4
 # define ROTATE_SPEED 0.07
 # define PI 3.14159265359
 # define TWO_D 0
@@ -103,6 +102,7 @@ typedef struct s_player
     bool        key_d;
     bool        key_left;
     bool        key_right;
+    bool        key_shift;
     bool        key_esc;
 }			t_player;
 
@@ -257,6 +257,8 @@ void	init_player(t_player *player, t_map *map);
 int		key_press(int keysim, t_player *player);
 int		key_release(int keysim, t_player *player);
 void	rotate_player(t_player *player, float angle_speed);
+int		game_exit(t_data *data);
+
 //void	move_player_position(t_player *player, int speed, float cos_angle, float sin_angle);
 void	move_player(t_player *player, t_data *data);
 

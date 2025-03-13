@@ -12,6 +12,16 @@
 
 #include "../inc/cub3d.h"
 
+int	game_exit(t_data *data)
+{
+	if (data->mlx)
+		mlx_destroy_display(data->mlx);
+	if (data->win)
+		mlx_destroy_window(data->mlx, data->win);
+	free(data->mlx);
+	exit(0);
+}
+
 void	init_player(t_player *player, t_map *map)
 {
 	player->x = (map->player_x + 0.5) * BLOCK;
@@ -34,6 +44,7 @@ void	init_player(t_player *player, t_map *map)
 	player->key_d = false;
 	player->key_left = false;
 	player->key_right = false;
+	player->key_shift = false;
 	player->key_esc = false;
 }
 
@@ -51,8 +62,10 @@ int	key_press(int keysim, t_player *player)
 		player->key_left = true;
 	else if (keysim == XK_Right)
 		player->key_right = true;
-	/* else if (keysim == XK_Escape)
-		player->key_esc == true; */
+	else if (keysim == XK_Shift_L)
+		player->key_shift = true;
+	else if (keysim == XK_Escape)
+		player->key_esc = true;
 	return (0);
 }
 
@@ -70,8 +83,10 @@ int	key_release(int keysim, t_player *player)
 		player->key_left = false;
 	else if (keysim == XK_Right)
 		player->key_right = false;
-	/* else if (keysim == XK_Escape)
-		player->key_esc == true; */
+	else if (keysim == XK_Shift_L)
+		player->key_shift = false;
+	else if (keysim == XK_Escape)
+		player->key_esc = true;
 	return (0);
 }
 
@@ -113,19 +128,23 @@ void	move_player_position(t_player *player, int speed, float cos_angle, float si
 
 void	move_player(t_player *player, t_data *data)
 {
+	float	move_speed;
 	float	cos_angle;
 	float	sin_angle;
 	float	new_x;
 	float	new_y;
 
+	move_speed = 10;
 	cos_angle = cos(player->angle);
 	sin_angle = sin(player->angle);
 	rotate_player(player, ROTATE_SPEED);
-	//move_player_position(player, MOVE_SPEED, cos_angle, sin_angle);
+	//move_player_position(player, move_speed, cos_angle, sin_angle);
+	if (player->key_shift)
+		move_speed *= 4;
 	if (player->key_w)
 	{
-		new_x = player->x + cos_angle * MOVE_SPEED;
-		new_y = player->y + sin_angle * MOVE_SPEED;
+		new_x = player->x + cos_angle * move_speed;
+		new_y = player->y + sin_angle * move_speed;
 		if (!touch_obs(new_x, player->y, data))
 			player->x = new_x;
 		if (!touch_obs(player->x, new_y, data))
@@ -133,8 +152,8 @@ void	move_player(t_player *player, t_data *data)
 	}
 	else if (player->key_s)
 	{
-		new_x = player->x - cos_angle * MOVE_SPEED;
-		new_y = player->y - sin_angle * MOVE_SPEED;
+		new_x = player->x - cos_angle * move_speed;
+		new_y = player->y - sin_angle * move_speed;
 		if (!touch_obs(new_x, player->y, data))
 			player->x = new_x;
 		if (!touch_obs(player->x, new_y, data))
@@ -142,8 +161,8 @@ void	move_player(t_player *player, t_data *data)
 	}
 	else if (player->key_a)
 	{
-		new_x = player->x + sin_angle * MOVE_SPEED;
-		new_y = player->y - cos_angle * MOVE_SPEED;
+		new_x = player->x + sin_angle * move_speed;
+		new_y = player->y - cos_angle * move_speed;
 		if (!touch_obs(new_x, player->y, data))
 			player->x = new_x;
 		if (!touch_obs(player->x, new_y, data))
@@ -151,13 +170,15 @@ void	move_player(t_player *player, t_data *data)
 	}
 	else if (player->key_d)
 	{
-		new_x = player->x - sin_angle * MOVE_SPEED;
-		new_y = player->y + cos_angle * MOVE_SPEED;
+		new_x = player->x - sin_angle * move_speed;
+		new_y = player->y + cos_angle * move_speed;
 		if (!touch_obs(new_x, player->y, data))
 			player->x = new_x;
 		if (!touch_obs(player->x, new_y, data))
 			player->y = new_y;
 	}
+	else if (player->key_esc)
+		game_exit(data);
 	player->dir_x = cos(player->angle);
 	player->dir_y = sin(player->angle);
 	player->plane_x = -sin(player->angle) * 0.66;
