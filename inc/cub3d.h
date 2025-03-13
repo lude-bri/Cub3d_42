@@ -214,22 +214,23 @@ typedef struct s_ray
 void	init_struct(t_data **data);
 
 //200 - PARSER
-int		_parser(char *file, t_game *game);
-int		init_game_struct(char *line, t_game *game);
+int		_parser(char *file, t_data *data, t_game *game);
+int		init_game_struct(char *line, t_game *game, t_data *data);
 int		sanity_check(char *file, char *type);
 
 //201 - SETTERS
 int		is_whitespace(char line);
-int		assign_path(char *line, char *id, char **target);
-int		set_map(char *line, t_map *map);
-void	set_fc(char *line, t_game *game);
-void	set_coord(char *line, t_game *game);
+int		assign_path(char *line, char *id, char **target, t_data *data);
+int		set_map(char *line, t_map *map, t_data *data);
+void	set_fc(char *line, t_game *game, t_data *data);
+void	set_coord(char *line, t_game *game, t_data *data);
 
 //210 - VALIDATE
-int		_validate_data(t_game **game);
+int		_validate_data(t_game **game, t_data *data);
 int		validate_textures(t_game *game);
 int		validate_rgb(t_game *game);
-int		validate_map(t_map *map);
+int		validate_map(t_map *map, t_data *data);
+int		validate_rows(t_map *map, int y, t_data *data);
 
 //211 - CHECKER
 int		check_texture(char *path);
@@ -263,6 +264,6 @@ int		game_exit(t_data *data);
 void	move_player(t_player *player, t_data *data);
 
 //900 - ERROR HANDLERS
-void	error(int	no);
+void	error(int	no, t_data *data);
 
 #endif

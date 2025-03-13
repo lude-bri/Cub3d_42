@@ -55,5 +55,6 @@ int	check_texture(char *path)
 	if (fd < 0)
 		return (FAILURE);
 	close(fd);
+	free(new_path);
 	return (SUCCESS);
 }

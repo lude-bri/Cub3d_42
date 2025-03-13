@@ -17,7 +17,7 @@ int	is_whitespace(char line)
 	return ((line == ' ') || (line == '\t'));
 }
 
-int	assign_path(char *line, char *id, char **target)
+int	assign_path(char *line, char *id, char **target, t_data *data)
 {
 	char	*new_line;
 
@@ -31,28 +31,30 @@ int	assign_path(char *line, char *id, char **target)
 		if (*line && *new_line)
 		{
 			*target = ft_strdup(new_line);
+			free(new_line);
+			free(line);
 			return (SUCCESS);
 		}
 		else
-			error(PARSE);
+			error(PARSE, data);
 	}
 	return (FAILURE);
 }
 
-void	set_coord(char *line, t_game *game)
+void	set_coord(char *line, t_game *game, t_data *data)
 {
-	if (assign_path(line, "NO", &game->north.path) == SUCCESS ||
-		assign_path(line, "SO", &game->south.path) == SUCCESS ||
-		assign_path(line, "WE", &game->west.path) == SUCCESS ||
-		assign_path(line, "EA", &game->east.path) == SUCCESS)
+	if (assign_path(line, "NO", &game->north.path, data) == SUCCESS ||
+		assign_path(line, "SO", &game->south.path, data) == SUCCESS ||
+		assign_path(line, "WE", &game->west.path, data) == SUCCESS ||
+		assign_path(line, "EA", &game->east.path, data) == SUCCESS)
 	{
 		return ;
 	}
 	else
-		error(PARSE);
+		error(PARSE, data);
 }
 
-void	set_fc(char *line, t_game *game)
+void	set_fc(char *line, t_game *game, t_data *data)
 {
 	char	**rgb;
 	int		i;
@@ -63,7 +65,7 @@ void	set_fc(char *line, t_game *game)
 		fc = true;
 	line++;
 	if (!is_whitespace(*line))
-		error(PARSE);
+		error(PARSE, data);
 	while (is_whitespace(*line))
 		line++;
 	if (line)
@@ -72,7 +74,7 @@ void	set_fc(char *line, t_game *game)
 		i = -1;
 		while (++i <= 2)
 			if (!rgb[i] || ft_strcmp(rgb[i], "\n") == 0)
-				error(RGB);
+				error(RGB, data);
 		if (fc == true)
 		{
 			game->floor.r = ft_atoi(rgb[0]);
@@ -85,21 +87,29 @@ void	set_fc(char *line, t_game *game)
 			game->ceiling.g = ft_atoi(rgb[1]);
 			game->ceiling.b = ft_atoi(rgb[2]);
 		}
+		i = 0;
+		while (rgb[i])
+			free(rgb[i++]);
+		free(rgb);
 	}
 	else
-		error(PARSE);
+		error(PARSE, data);
+
 }
 
-int	set_map(char *line, t_map *map)
+int	set_map(char *line, t_map *map, t_data *data)
 {
 	static int	i = 0;
 
 	if (!line)
-		error(PARSE);
+		error(PARSE, data);
 	if (!map->grid)
+	{
 		map->grid = malloc(sizeof(char *) * 1024);
-	if (!map->grid)
-		error(PARSE);
-	map->grid[i++] = line;
+		if (!map->grid)
+			error(PARSE, data);
+		ft_memset(map->grid, 0, sizeof(char *) * 1024);
+	}
+	map->grid[i++] = ft_strdup(line);
 	return (SUCCESS);
 }

@@ -61,7 +61,7 @@ static int	verify_player(t_map *map, char c, int player_count)
 	return (FAILURE);
 }
 
-int	validate_rows(t_map *map, int y)
+int	validate_rows(t_map *map, int y, t_data *data)
 {
 	int	x;
 	int	player_count;
@@ -94,7 +94,7 @@ int	validate_rows(t_map *map, int y)
 		y++;
 	}
 	if (player_count != 1)
-		error(PLAYER);
+		error(PLAYER, data);
 	return (SUCCESS);
 }
 
@@ -117,7 +117,7 @@ static int	set_map_coord(t_map *map)
 	{
 		x = 0;
 		if (map->grid[y][x] == '\t')
-			error(MAP);
+			return(FAILURE);
 		while (map->grid[y][x] && map->grid[y][x] != '\n')
 			x++;
 		if (x > max_width)
@@ -143,31 +143,40 @@ static char	*create_border_line(int width)
 	return (line);
 }
 
-static void	transform_map(char **map, int w)
+static void transform_map(char **map, int w)
 {
-	int		x;
-	int		y;
-	char	*temp;
+    int  x, y;
+    char *temp;
 
-	y = 0;
-	while (map[y])
-	{
-		x = 0;
-		temp = map[y];
-		while (temp[x] && temp[x] != '\n')
-		{
-			if (temp[x] == ' ')
-				temp[x] = '#';
-			x++;
-		}
-		while (x < w)
-		{
-			temp[x] = '#';
-			x++;
-		}
-		temp[x] = '\0';
-		y++;
-	}
+    y = 0;
+    while (map[y])
+    {
+        x = 0;
+        
+        // Aloca memória nova
+        temp = malloc(w + 1);
+        if (!temp)
+        {
+            printf("Erro ao alocar memória para map[%d]\n", y);
+            exit(EXIT_FAILURE);
+        }
+        ft_memset(temp, '#', w);  // Preenche com '#'
+        temp[w] = '\0';
+
+        // Copia os caracteres existentes até '\n' ou fim da string
+        while (map[y][x] && map[y][x] != '\n' && x < w)
+        {
+            if (map[y][x] != ' ')
+                temp[x] = map[y][x];
+            x++;
+        }
+
+        free(map[y]);  // Libera a memória original
+        map[y] = temp; // Substitui pelo novo buffer
+
+        y++;
+    }
+    map[y] = NULL;
 }
 
 static char	**copy_map(t_map *map)
@@ -233,7 +242,7 @@ static int	validate_walls(t_map *map)
 	return (SUCCESS);
 }
 
-int	validate_map(t_map *map)
+int	validate_map(t_map *map, t_data *data)
 {
 	//ver se mapa existe
 	if (!set_map_coord(map))
@@ -241,7 +250,7 @@ int	validate_map(t_map *map)
 	if (map->width <= 0 || map->height <= 0 || map->grid == NULL)
 		return (FAILURE);
 	//validar caracteres e verificar se o jogador existe
-	if (!validate_rows(map, 0))
+	if (!validate_rows(map, 0, data))
 		return (FAILURE);
 	//Varificar se o mapa esta rodeado de paredes, neste caso em cima e baixo (flood_fill)
 	if (!validate_walls(map))
@@ -249,18 +258,18 @@ int	validate_map(t_map *map)
 	return (SUCCESS);
 }
 
-int	_validate_data(t_game **game)
+int	_validate_data(t_game **game, t_data *data)
 {
 	//validar se as texturas existem
 	if (!validate_textures(*game))
-		error(TEXTURE);
+		error(TEXTURE, data);
 
 	//validar se os rgb estao corretos
 	if (!validate_rgb(*game))
-		error(RGB);
+		error(RGB, data);
 	
 	//validar se o mapa esta correto
-	if (!validate_map(&(*game)->map))
-		error(MAP);
+	if (!validate_map((&(*game)->map), data))
+		error(MAP, data);
 	return (SUCCESS);
 }

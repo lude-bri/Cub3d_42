@@ -42,13 +42,13 @@ int	main(int ac, char **av)
 		init_struct(&data);
 
 		//parse everything
-		if (!_parser(av[1], data->game))
-			error(PARSE);
+		if (!_parser(av[1], data, data->game))
+			error(PARSE, data);
 
 		//validate data
-		if (!_validate_data(&data->game))
-			error(VALIDATE);
-
+		if (!_validate_data(&data->game, data))
+			error(VALIDATE, data);
+		
 		init_game(data);
 		//send the parsed map to mlx loop
 		mlx_hook(data->win, 2, 1L<<0, key_press, &data->player);
@@ -57,8 +57,7 @@ int	main(int ac, char **av)
 		mlx_loop_hook(data->mlx, draw_loop, data);
 		mlx_loop(data->mlx);
 		return (0);
-		//wait till end and close/free
 	}
 	else
-		error(ARG);
+		error(ARG, 0);
 }

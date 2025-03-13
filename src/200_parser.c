@@ -31,23 +31,23 @@ int	sanity_check(char *file, char *type)
 	return (FAILURE);
 }
 
-int	init_game_struct(char *line, t_game *game)
+int	init_game_struct(char *line, t_game *game, t_data *data)
 {
 	if (!line || !*line)
 		return (FAILURE);
 	while (is_whitespace(*line))
 		line++;
 	if (*line == 'N' || *line == 'W' || *line == 'S' || *line == 'E')
-		set_coord(line, game);
+		set_coord(line, game, data);
 	else if (*line == 'F' || *line == 'C')
-		set_fc(line, game);
+		set_fc(line, game, data);
 	else if (is_map(game) == true) //8 is the minimum of a correct map
-		if (!set_map(line, &game->map))
+		if (!set_map(line, &game->map, data))
 			return (FAILURE);
 	return (SUCCESS);
 }
 
-int	_parser(char *file, t_game *game)
+int	_parser(char *file, t_data *data, t_game *game)
 {
 	int		fd;
 	char	*line;
@@ -60,8 +60,9 @@ int	_parser(char *file, t_game *game)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if(!init_game_struct(line, game))
+		if(!init_game_struct(line, game, data))
 			return (FAILURE);
+		free(line);
 		line = get_next_line(fd);
 		game->count++;
 	}

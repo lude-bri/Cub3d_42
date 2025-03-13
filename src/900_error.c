@@ -12,7 +12,32 @@
 
 #include "../inc/cub3d.h"
 
-void	error(int	no)
+void	free_game(int no, t_data *data)
+{
+	int		i;
+
+	if (data->game->map.grid)
+	{
+		i = 0;
+		while (data->game->map.grid[i])
+			free(data->game->map.grid[i++]);
+		free(data->game->map.grid);
+	}
+	if (data->game->north.path)
+		free(data->game->north.path);
+	if (data->game->north.path)
+		free(data->game->south.path);
+	if (data->game->east.path)
+		free(data->game->east.path);
+	if (data->game->west.path)
+		free(data->game->west.path);
+	if (data->game)
+		free(data->game);
+	free(data);
+	exit (no);
+}
+
+void	error(int	no, t_data *data)
 {
 	if (no == PARSE)
 		ft_putstr_fd("Error: Failure to parse map file\n", 2);
@@ -30,6 +55,6 @@ void	error(int	no)
 		ft_putstr_fd("Error: More than one or not enough players\n", 2);
 	else if (no == TEXTURE)
 		ft_putstr_fd("Error: Invalid texture\n", 2);
-	//add frees !!!!!!!!!
-	exit (no);
+	free_game(no, data);
 }
+
