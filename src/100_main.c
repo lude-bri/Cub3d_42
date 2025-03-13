@@ -6,21 +6,30 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 14:47:22 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/03/05 11:36:46 by lude-bri         ###   ########.fr       */
+/*   Updated: 2025/03/12 23:48:39 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	init_game(t_data *game)
+void	init_game(t_data *data)
 {
-	init_player(&game->player);
-	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3d");
-	game->img.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
-	game->data = mlx_get_data_addr(game->img.img, &game->img.bits_per_pixel, 
-								&game->img.line_length, &game->img.endian);
-	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
+	/* int	width;
+	int	height; */
+	
+	init_player(&data->player, &data->game->map);
+	data->map = &data->game->map;
+	data->mlx = mlx_init();
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "cub3d");
+	data->img.img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel, 
+								&data->img.line_length, &data->img.endian);
+	data->data = data->img.addr;
+	data->game->north.img = mlx_xpm_file_to_image(data->mlx, data->game->north.path, &data->game->north.width, &data->game->north.height);
+	data->game->south.img = mlx_xpm_file_to_image(data->mlx, data->game->south.path, &data->game->south.width, &data->game->south.height);
+	data->game->east.img = mlx_xpm_file_to_image(data->mlx, data->game->east.path, &data->game->east.width, &data->game->east.height);
+	data->game->west.img = mlx_xpm_file_to_image(data->mlx, data->game->west.path, &data->game->west.width, &data->game->west.height);
+	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 }
 
 int	main(int ac, char **av)

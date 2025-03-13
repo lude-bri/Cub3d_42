@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   210_validate.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lude-bri <lude-bri@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:27:45 by luigi             #+#    #+#             */
-/*   Updated: 2025/03/05 12:33:27 by lude-bri         ###   ########.fr       */
+/*   Updated: 2025/03/13 00:01:46 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static unsigned long	convert_rgb_to_hex(t_color *color)
 {
 	unsigned long	hex;
 
-	hex = ((color->r & 0xff) << 16) + ((color->g & 0xff) << 8) + (color->b & 0xff);
+	hex = ((color->r & 0xFF) << 16) + ((color->g & 0xFF) << 8) + (color->b & 0xFF);
 	return (hex);
 }
 

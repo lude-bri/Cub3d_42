@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 14:44:23 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/03/05 11:36:44 by lude-bri         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:12:41 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,15 @@
 # define HEIGHT 720
 # define FOV 60
 # define BLOCK 64
-# define MOVE_SPEED 2
-# define ROTATE_SPEED 0.5
+# define MOVE_SPEED 4
+# define ROTATE_SPEED 0.07
 # define PI 3.14159265359
-# define TWO_D 1 
+# define TWO_D 0
 
-//reminder of player coord when spawn
-//NORTH -> PI / 2
-//SOUTH -> 3 * PI / 2
-//WEST -> PI
-//EAST -> PI * 2
+# define NORTH -> PI / 2
+# define SOUTH -> 3 * PI / 2
+# define WEST -> PI
+# define EAST -> PI * 2
 
 /* ************************************************************************** */
 /*                                  ENUMS								  	  */
@@ -104,6 +103,7 @@ typedef struct s_player
     bool        key_d;
     bool        key_left;
     bool        key_right;
+    bool        key_esc;
 }			t_player;
 
 //keys + events struct
@@ -161,6 +161,49 @@ typedef struct s_game
     t_map       map;
 }				t_game;
 
+typedef struct s_ray
+{
+	float	ray_x;
+	float	ray_y;
+	float	ray_dir_x; // Calculate ray direction x-component
+	float	ray_dir_y; // Calculate ray direction y-component
+	float	dist;
+	float	angle_dif;
+	int		height;
+	int		draw_start;
+	int		draw_end;
+	int		y;
+	int		tx_x;
+	float	tx_y; // Changed to float for smoother texture stepping
+	char	*tx_addr;
+	int		tx_bpp;
+	int		tx_l;
+	int		tx_endian;
+	void	*tx_img;
+	int		color;
+	int		wall_dir; // 0=north, 1=south, 2=east, 3=west
+	float	wall_x;   // Where exactly the wall was hit
+    float   prev_x;
+    float   prev_y;
+    int     prev_map_x;
+    int     prev_map_y;
+    int     map_x;
+    int     map_y;
+
+    float   tex_height;
+    float   step;
+    float   tex_pos;
+    int     txpp;
+    unsigned char r;
+    unsigned char g;
+    unsigned char b;
+
+    double shade_factor;
+    int shade_r;
+    int shade_g;
+    int shade_b;
+}				t_ray;
+
 /* ************************************************************************** */
 /*                                 FUNCTIONS                                  */
 /* ************************************************************************** */
@@ -200,7 +243,7 @@ int		check_sides(t_map *map, char **map_copy);
 int		check_holes(t_map *map, char **map_copy);
 
 //300 - RAYCASTING
-void	put_pixel(int x, int y, int color, t_data *data);
+void	put_pixel(int x, int y, unsigned int color, t_data *data);
 bool	touch_obs(float px, float py, t_data *data);
 float	fixed_dist(float x1, float y1, float x2, t_data *data);
 void	draw_line(t_player *player, float angle, int i, t_data *data);
@@ -210,12 +253,12 @@ void	clear_image(t_data *data);
 int		draw_loop(t_data *data);
 
 //400 - PLAYER
-void	init_player(t_player *player);
+void	init_player(t_player *player, t_map *map);
 int		key_press(int keysim, t_player *player);
 int		key_release(int keysim, t_player *player);
 void	rotate_player(t_player *player, float angle_speed);
-void	move_player_position(t_player *player, int speed, float cos_angle, float sin_angle);
-void	move_player(t_player *player);
+//void	move_player_position(t_player *player, int speed, float cos_angle, float sin_angle);
+void	move_player(t_player *player, t_data *data);
 
 //900 - ERROR HANDLERS
 void	error(int	no);
