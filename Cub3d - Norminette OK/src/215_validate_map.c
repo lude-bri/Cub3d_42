@@ -23,19 +23,10 @@ int	validate_walls(t_map *map)
 		return (FAILURE);
 	if (map->player_x < 0 || map->player_x >= map->width
 		|| map->player_y < 0 || map->player_y >= map->height)
-	{
-		i = -1;
-		while (map_copy[++i])
-			free(map_copy[i]);
-		free(map_copy);
-		return (FAILURE);
-	}
+		return (free_map(map_copy), FAILURE);
 	if (!check_map(map, map_copy))
-		return (FAILURE);
-	i = 0;
-	while (map_copy[i])
-		free(map_copy[i++]);
-	free(map_copy);
+		return (free_map(map_copy), FAILURE);
+	free_map(map_copy);
 	return (SUCCESS);
 }
 

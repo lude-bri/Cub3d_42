@@ -61,10 +61,15 @@ void	init_game(t_data *data)
 
 static void	init_values(t_data *data)
 {
+	data->game->dup = false;
 	data->game->north.path = NULL;
 	data->game->south.path = NULL;
 	data->game->east.path = NULL;
 	data->game->west.path = NULL;
+	data->game->north.assigned = false;
+	data->game->south.assigned = false;
+	data->game->east.assigned = false;
+	data->game->west.assigned = false;
 	data->game->floor.r = -1;
 	data->game->floor.g = -1;
 	data->game->floor.b = -1;

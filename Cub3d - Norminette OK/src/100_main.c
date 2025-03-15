@@ -32,5 +32,5 @@ int	main(int ac, char **av)
 		return (0);
 	}
 	else
-		error(ARG, 0);
+		return (ft_putstr_fd("Error: Try ./cub3D <map>\n", 2));
 }

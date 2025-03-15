@@ -25,7 +25,7 @@ void	free_game(int no, t_data *data)
 	}
 	if (data->game->north.path)
 		free(data->game->north.path);
-	if (data->game->north.path)
+	if (data->game->south.path)
 		free(data->game->south.path);
 	if (data->game->east.path)
 		free(data->game->east.path);

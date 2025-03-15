@@ -15,13 +15,13 @@
 void	texture_coord(t_ray *ray)
 {
 	ray->tx_x = (int)(ray->wall_x * 64);
-	if (ray->wall_dir == 0 && ray->ray_dir_y > 0)
+	if (ray->wall_dir == NORTH && ray->ray_dir_y > 0)
 		ray->tx_x = 64 - ray->tx_x - 1;
-	else if (ray->wall_dir == 1 && ray->ray_dir_y > 0)
+	else if (ray->wall_dir == SOUTH && ray->ray_dir_y > 0)
 		ray->tx_x = 64 - ray->tx_x - 1;
-	else if (ray->wall_dir == 2 && ray->ray_dir_x < 0)
+	else if (ray->wall_dir == EAST && ray->ray_dir_x < 0)
 		ray->tx_x = 64 - ray->tx_x - 1;
-	else if (ray->wall_dir == 3 && ray->ray_dir_x > 0)
+	else if (ray->wall_dir == WEST && ray->ray_dir_x > 0)
 		ray->tx_x = 64 - ray->tx_x - 1;
 	if (ray->tx_x < 0)
 		ray->tx_x = 0;

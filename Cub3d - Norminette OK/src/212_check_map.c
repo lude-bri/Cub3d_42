@@ -12,13 +12,12 @@
 
 #include "../inc/cub3d.h"
 
-int	check_holes(t_map *map, char **map_copy)
+int	check_holes(char **map_copy)
 {
 	int		x;
 	int		y;
 	bool	valid;
 
-	(void)map;
 	valid = true;
 	y = -1;
 	while (map_copy[++y])
@@ -40,9 +39,8 @@ int	check_holes(t_map *map, char **map_copy)
 	return (SUCCESS);
 }
 
-int	check_sides(t_map *map, char **map_copy)
+int	check_sides(char **map_copy)
 {
-	(void)map;
 	if (check_left_side(map_copy) == FAILURE)
 		return (FAILURE);
 	if (check_right_side(map_copy) == FAILURE)
@@ -50,13 +48,12 @@ int	check_sides(t_map *map, char **map_copy)
 	return (SUCCESS);
 }
 
-int	check_bottom(t_map *map, char **map_copy)
+int	check_bottom(char **map_copy)
 {
 	int		x;
 	int		y;
 	bool	valid;
 
-	(void)map;
 	valid = true;
 	y = find_bottom_line(map_copy);
 	x = 0;
@@ -68,19 +65,24 @@ int	check_bottom(t_map *map, char **map_copy)
 			valid = false;
 		while (map_copy[y][x] == '1' || map_copy[y][x] == '#')
 			x++;
+		if (map_copy[y][x] == 'N' || map_copy[y][x] == 'S'
+			|| map_copy[y][x] == 'E' || map_copy[y][x] == 'W')
+		{
+			if (map_copy[y - 1][x] == '#' || map_copy[y + 1][x] == '#')
+				return (FAILURE);
+		}
 		if (valid == false)
 			return (FAILURE);
 	}
 	return (SUCCESS);
 }
 
-int	check_top(t_map *map, char **map_copy)
+int	check_top(char **map_copy)
 {
 	int		y;
 	int		x;
 	bool	valid;
 
-	(void)map;
 	valid = true;
 	y = find_top_line(map_copy);
 	x = 0;
@@ -92,6 +94,12 @@ int	check_top(t_map *map, char **map_copy)
 			valid = false;
 		while (map_copy[y][x] == '1' || map_copy[y][x] == '#')
 			x++;
+		if (map_copy[y][x] == 'N' || map_copy[y][x] == 'S'
+			|| map_copy[y][x] == 'E' || map_copy[y][x] == 'W')
+		{
+			if (map_copy[y - 1][x] == '#' || map_copy[y + 1][x] == '#')
+				return (FAILURE);
+		}
 		if (valid == false)
 			return (FAILURE);
 	}
@@ -100,15 +108,16 @@ int	check_top(t_map *map, char **map_copy)
 
 int	check_map(t_map *map, char **map_copy)
 {
+	(void)map;
 	if (!map->grid)
 		return (FAILURE);
-	if (!check_top(map, map_copy))
+	if (!check_top(map_copy))
 		return (FAILURE);
-	if (!check_bottom(map, map_copy))
+	if (!check_bottom(map_copy))
 		return (FAILURE);
-	if (!check_sides(map, map_copy))
+	if (!check_sides(map_copy))
 		return (FAILURE);
-	if (!check_holes(map, map_copy))
+	if (!check_holes(map_copy))
 		return (FAILURE);
 	return (SUCCESS);
 }

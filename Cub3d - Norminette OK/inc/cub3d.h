@@ -127,6 +127,7 @@ typedef struct s_texture
 	void	*img;
 	int		w;
 	int		h;
+	bool	assigned;
 }			t_texture;
 
 //colour struct
@@ -153,6 +154,7 @@ typedef struct s_map
 typedef struct s_game
 {
 	int			count;
+	int			dup;
 	t_texture	north;
 	t_texture	south;
 	t_texture	west;
@@ -225,8 +227,8 @@ int				_parser(char *file, t_data *data, t_game *game);
 //201 - SETTERS
 int				assign_path(char *line, char *id, char **target, t_data *data);
 void			set_coord(char *line, t_game *game, t_data *data);
-void			set_floor(char *line, t_game *game, t_data *data);
-void			set_ceiling(char *line, t_game *game, t_data *data);
+int				set_floor(char *line, t_game *game, t_data *data);
+int				set_ceiling(char *line, t_game *game, t_data *data);
 int				set_map(char *line, t_map *map, t_data *data);
 
 //202 - MISC
@@ -244,10 +246,10 @@ int				out_of_range(t_game *game);
 int				check_texture(char *path);
 
 //212 - CHECK MAP
-int				check_holes(t_map *map, char **map_copy);
-int				check_sides(t_map *map, char **map_copy);
-int				check_bottom(t_map *map, char **map_copy);
-int				check_top(t_map *map, char **map_copy);
+int				check_holes(char **map_copy);
+int				check_sides(char **map_copy);
+int				check_bottom(char **map_copy);
+int				check_top(char **map_copy);
 int				check_map(t_map *map, char **map_copy);
 
 //213 - VALIDATE TEXTURES
@@ -318,6 +320,8 @@ int				key_press(int keysim, t_player *player);
 //800 - FREES
 void			clean_mlx_image(t_data *data);
 int				game_exit(t_data *data);
+void			free_map(char **map);
+void			free_rgb(char **rgb);
 
 //900 - ERROR HANDLERS
 void			error(int no, t_data *data);

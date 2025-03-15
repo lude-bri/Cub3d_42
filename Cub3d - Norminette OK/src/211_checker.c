@@ -47,12 +47,12 @@ int	check_texture(char *path)
 
 	new_path = ft_strtrim(path, " ");
 	if (!sanity_check(new_path, ".xpm"))
-		return (FAILURE);
+		return (free(new_path), FAILURE);
 	if (!check_directory(new_path))
-		return (FAILURE);
+		return (free(new_path), FAILURE);
 	fd = open(new_path, O_RDONLY);
 	if (fd < 0)
-		return (FAILURE);
+		return (free(new_path), FAILURE);
 	close(fd);
 	free(new_path);
 	return (SUCCESS);

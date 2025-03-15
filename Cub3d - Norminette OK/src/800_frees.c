@@ -50,3 +50,27 @@ int	game_exit(t_data *data)
 	free(data);
 	exit(0);
 }
+
+void	free_map(char **map)
+{
+	int		i;
+
+	if (!map)
+		return ;
+	i = 0;
+	while (map[i])
+		free(map[i++]);
+	free(map);
+}
+
+void	free_rgb(char **rgb)
+{
+	int		i;
+
+	if (!rgb)
+		return ;
+	i = 0;
+	while (rgb[i])
+		free(rgb[i++]);
+	free(rgb);
+}

@@ -26,7 +26,8 @@ int	init_game_struct(char *line, t_game *game, t_data *data)
 		return (FAILURE);
 	while (is_whitespace(*line))
 		line++;
-	if (*line == 'N' || *line == 'W' || *line == 'S' || *line == 'E')
+	if ((*line == 'N' || *line == 'W' || *line == 'S' || *line == 'E')
+		&& !game->map.grid)
 		set_coord(line, game, data);
 	else if (*line == 'F')
 		set_floor(line, game, data);
