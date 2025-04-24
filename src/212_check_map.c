@@ -3,120 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   212_check_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lude-bri <lude-bri@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:21:51 by luigi             #+#    #+#             */
-/*   Updated: 2025/03/10 21:35:59 by luigi            ###   ########.fr       */
+/*   Updated: 2025/03/14 18:39:48 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-int	check_bottom(t_map *map, char **map_copy)
+int	check_holes(char **map_copy)
 {
 	int		x;
 	int		y;
 	bool	valid;
 
-	(void)map;
-	valid = true;
-	y = 0;
-	while (map_copy[y])
-		y++;
-	y -= 1;
-	while (map_copy[y])
-	{
-		x = 0;
-		while (map_copy[y][x] == '#' && map_copy[y][x] != '\n' && map_copy[y][x])
-			x++;
-		if (map_copy[y][x] == '\n' || map_copy[y][x] == '\0')
-			y--;
-		else if (map_copy[y][x] == '1')
-		{
-			if (map_copy[y - 1][x] != '1')
-				valid = false;
-			while (map_copy[y][x] == '1' || map_copy[y][x] == '#')
-				x++;
-			if (valid == true)
-				break ;
-		}
-	}
-	if (valid == false)
-		return (FAILURE);
-	return (SUCCESS);
-}
-
-int	check_top(t_map *map, char **map_copy)
-{
-	int		y;
-	int		x;
-	bool	valid;
-
-	(void)map;
-	valid = true;
-	y = 0;
-	while (map_copy[y])
-	{
-		x = 0;
-		while (map_copy[y][x] == '#' && map_copy[y][x] != '\n' && map_copy[y][x])
-			x++;
-		if (map_copy[y][x] == '\n' || map_copy[y][x] == '\0')
-			y++;
-		else if (map_copy[y][x] == '1')
-		{
-			if (map_copy[y + 1][x] != '1')
-				valid = false;
-			while (map_copy[y][x] == '1' || map_copy[y][x] == '#')
-				x++;
-			if (valid == true)
-				break ;
-		}
-	}
-	if (valid == false)
-		return (FAILURE);
-	return(SUCCESS);
-}
-
-int	check_sides(t_map *map, char **map_copy)
-{
-	int		x;
-	int		y;
-	bool	valid;
-
-	(void)map;
-	valid = true;
-	y = 0;
-	while (map_copy[y])
-		y++;
-	x = -1;
-	while (++x < y)
-	{
-		if (map_copy[x][1] != '#' && map_copy[x][1] != '1')
-			valid = false;
-	}
-	x = 0;
-	y = 0;
-	while (map_copy[y][x])
-		x++;
-	x--;
-	while (map_copy[y])
-	{
-		if (map_copy[y][x - 1] != '#' && map_copy[y][x - 1] != '1')
-			valid = false;
-		y++;
-	}
-	if (valid == false)
-		return (FAILURE);
-	return(SUCCESS);
-}
-
-int	check_holes(t_map *map, char **map_copy)
-{
-	int		x;
-	int		y;
-	bool	valid;
-
-	(void)map;
 	valid = true;
 	y = -1;
 	while (map_copy[++y])
@@ -135,20 +36,88 @@ int	check_holes(t_map *map, char **map_copy)
 	}
 	if (valid == false)
 		return (FAILURE);
-	return(SUCCESS);
+	return (SUCCESS);
+}
+
+int	check_sides(char **map_copy)
+{
+	if (check_left_side(map_copy) == FAILURE)
+		return (FAILURE);
+	if (check_right_side(map_copy) == FAILURE)
+		return (FAILURE);
+	return (SUCCESS);
+}
+
+int	check_bottom(char **map_copy)
+{
+	int		x;
+	int		y;
+	bool	valid;
+
+	valid = true;
+	y = find_bottom_line(map_copy);
+	x = 0;
+	while (map_copy[y][x] == '#' && map_copy[y][x] != '\n' && map_copy[y][x])
+		x++;
+	if (map_copy[y][x] == '1')
+	{
+		if (map_copy[y - 1][x] != '1')
+			valid = false;
+		while (map_copy[y][x] == '1' || map_copy[y][x] == '#')
+			x++;
+		if (map_copy[y][x] == 'N' || map_copy[y][x] == 'S'
+			|| map_copy[y][x] == 'E' || map_copy[y][x] == 'W')
+		{
+			if (map_copy[y - 1][x] == '#' || map_copy[y + 1][x] == '#')
+				return (FAILURE);
+		}
+		if (valid == false)
+			return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
+int	check_top(char **map_copy)
+{
+	int		y;
+	int		x;
+	bool	valid;
+
+	valid = true;
+	y = find_top_line(map_copy);
+	x = 0;
+	while (map_copy[y][x] == '#' && map_copy[y][x] != '\n' && map_copy[y][x])
+		x++;
+	if (map_copy[y][x] == '1')
+	{
+		if (map_copy[y + 1][x] != '1')
+			valid = false;
+		while (map_copy[y][x] == '1' || map_copy[y][x] == '#')
+			x++;
+		if (map_copy[y][x] == 'N' || map_copy[y][x] == 'S'
+			|| map_copy[y][x] == 'E' || map_copy[y][x] == 'W')
+		{
+			if (map_copy[y - 1][x] == '#' || map_copy[y + 1][x] == '#')
+				return (FAILURE);
+		}
+		if (valid == false)
+			return (FAILURE);
+	}
+	return (SUCCESS);
 }
 
 int	check_map(t_map *map, char **map_copy)
 {
+	(void)map;
 	if (!map->grid)
 		return (FAILURE);
-	if (!check_top(map, map_copy))
+	if (!check_top(map_copy))
 		return (FAILURE);
-	if (!check_bottom(map, map_copy))
+	if (!check_bottom(map_copy))
 		return (FAILURE);
-	if (!check_sides(map, map_copy))
+	if (!check_sides(map_copy))
 		return (FAILURE);
-	if (!check_holes(map, map_copy))
+	if (!check_holes(map_copy))
 		return (FAILURE);
 	return (SUCCESS);
 }

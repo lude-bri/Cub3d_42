@@ -46,11 +46,24 @@ FILES = 100_main.c
 FILES += 110_init.c
 FILES += 200_parser.c
 FILES += 201_setters.c
+FILES += 202_misc.c
 FILES += 210_validate.c
 FILES += 211_checker.c
 FILES += 212_check_map.c
+FILES += 213_validate_textures.c
+FILES += 214_validate_rgb.c
+FILES += 215_validate_map.c
+FILES += 216_validate_misc.c
+FILES += 217_check_map_misc.c
 FILES += 300_raycasting.c
+FILES += 301_rayc_calculations.c
+FILES += 302_rayc_draws.c
+FILES += 303_rayc_textures.c
+FILES += 304_rayc_2d.c
 FILES += 400_player_movement.c
+FILES += 401_direction.c
+FILES += 402_keygen.c
+FILES += 800_frees.c
 FILES += 900_error.c
 
 ### Paths

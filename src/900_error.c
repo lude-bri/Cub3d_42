@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   900_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
+/*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:04:49 by luigi             #+#    #+#             */
-/*   Updated: 2025/02/13 15:26:40 by luigi            ###   ########.fr       */
+/*   Updated: 2025/03/14 18:42:26 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_game(int no, t_data *data)
 	}
 	if (data->game->north.path)
 		free(data->game->north.path);
-	if (data->game->north.path)
+	if (data->game->south.path)
 		free(data->game->south.path);
 	if (data->game->east.path)
 		free(data->game->east.path);
@@ -37,24 +37,23 @@ void	free_game(int no, t_data *data)
 	exit (no);
 }
 
-void	error(int	no, t_data *data)
+void	error(int no, t_data *data)
 {
 	if (no == PARSE)
-		ft_putstr_fd("Error: Failure to parse map file\n", 2);
+		ft_putstr_fd("Error:\nFailure to parse map file\n", 2);
 	else if (no == INIT_GAME)
-		ft_putstr_fd("Error: Failure to initialize game\n", 2);
+		ft_putstr_fd("Error:\nFailure to initialize game\n", 2);
 	else if (no == INIT_WINDOW)
-		ft_putstr_fd("Error: Failure to initialize window\n", 2);
+		ft_putstr_fd("Error:\nFailure to initialize window\n", 2);
 	else if (no == ARG)
-		ft_putstr_fd("Error: Try ./cub3D <map.cub>\n", 2);
+		ft_putstr_fd("Error:\nTry ./cub3D <map.cub>\n", 2);
 	else if (no == RGB)
-		ft_putstr_fd("Error: Invalid or missing color\n", 2);
+		ft_putstr_fd("Error:\nInvalid or missing color\n", 2);
 	else if (no == MAP)
-		ft_putstr_fd("Error: Invalid character on map\n", 2);
+		ft_putstr_fd("Error:\nInvalid character on map\n", 2);
 	else if (no == PLAYER)
-		ft_putstr_fd("Error: More than one or not enough players\n", 2);
+		ft_putstr_fd("Error:\nMore than one or not enough players\n", 2);
 	else if (no == TEXTURE)
-		ft_putstr_fd("Error: Invalid texture\n", 2);
+		ft_putstr_fd("Error:\nInvalid texture\n", 2);
 	free_game(no, data);
 }
-

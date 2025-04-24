@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   211_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lude-bri <lude-bri@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:31:30 by lude-bri          #+#    #+#             */
-/*   Updated: 2025/03/05 11:18:04 by lude-bri         ###   ########.fr       */
+/*   Updated: 2025/03/14 18:39:32 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	check_directory(char *path)
 {
 	int		fd;
-	
+
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (FAILURE);
@@ -45,15 +45,14 @@ int	check_texture(char *path)
 	int		fd;
 	char	*new_path;
 
-	// path = ft_strtrim(path, "\n");
 	new_path = ft_strtrim(path, " ");
 	if (!sanity_check(new_path, ".xpm"))
-		return (FAILURE);
+		return (free(new_path), FAILURE);
 	if (!check_directory(new_path))
-		return (FAILURE);
+		return (free(new_path), FAILURE);
 	fd = open(new_path, O_RDONLY);
 	if (fd < 0)
-		return (FAILURE);
+		return (free(new_path), FAILURE);
 	close(fd);
 	free(new_path);
 	return (SUCCESS);

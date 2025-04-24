@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 19:00:58 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/02/27 23:53:08 by luigi            ###   ########.fr       */
+/*   Updated: 2025/03/14 18:37:32 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,25 @@ bool	is_map(t_game *game)
 	return (false);
 }
 
+int	init_game_struct(char *line, t_game *game, t_data *data)
+{
+	if (!line || !*line)
+		return (FAILURE);
+	while (is_whitespace(*line))
+		line++;
+	if ((*line == 'N' || *line == 'W' || *line == 'S' || *line == 'E')
+		&& !game->map.grid)
+		set_coord(line, game, data);
+	else if (*line == 'F')
+		set_floor(line, game, data);
+	else if (*line == 'C')
+		set_ceiling(line, game, data);
+	else if (is_map(game) == true)
+		if (!set_map(line, &game->map, data))
+			return (FAILURE);
+	return (SUCCESS);
+}
+
 //verify if it is .cub
 int	sanity_check(char *file, char *type)
 {
@@ -29,22 +48,6 @@ int	sanity_check(char *file, char *type)
 	if (len > 4 && ft_strcmp(file + len - 4, type) == 0)
 		return (SUCCESS);
 	return (FAILURE);
-}
-
-int	init_game_struct(char *line, t_game *game, t_data *data)
-{
-	if (!line || !*line)
-		return (FAILURE);
-	while (is_whitespace(*line))
-		line++;
-	if (*line == 'N' || *line == 'W' || *line == 'S' || *line == 'E')
-		set_coord(line, game, data);
-	else if (*line == 'F' || *line == 'C')
-		set_fc(line, game, data);
-	else if (is_map(game) == true) //8 is the minimum of a correct map
-		if (!set_map(line, &game->map, data))
-			return (FAILURE);
-	return (SUCCESS);
 }
 
 int	_parser(char *file, t_data *data, t_game *game)
@@ -60,7 +63,7 @@ int	_parser(char *file, t_data *data, t_game *game)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if(!init_game_struct(line, game, data))
+		if (!init_game_struct(line, game, data))
 			return (FAILURE);
 		free(line);
 		line = get_next_line(fd);
